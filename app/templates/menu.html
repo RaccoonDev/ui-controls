@@ -1,0 +1,10 @@
+<ul class="menu">
+    <li data-ng-repeat="item in items">
+        {{item.title}}
+        <ul data-ng-show="false">
+            <li data-ng-repeat="subitem in item.subItems">
+                {{subitem.title}}
+            </li>
+        </ul>
+    </li>
+</ul>

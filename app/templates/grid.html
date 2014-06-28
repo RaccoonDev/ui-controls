@@ -1,0 +1,41 @@
+<table class="grid">
+    <thead>
+        <tr>
+            <th colspan="{{settings.columns.length}}" class="commands">
+                <input type="button" value="Log" data-ng-click="logSelectedItem()" />
+                <input type="button" value="Edit" data-ng-click="editSelectedItem()" />
+            </th>
+        </tr>
+        <tr>
+            <th data-ng-repeat="column in settings.columns" data-ng-class="{sortable: column.sortable}" data-ng-click="sortBy(column)">
+                {{column.name}}&nbsp;{{column.sortable ? column.sorting.desc ? 'dsc' : 'asc' : ''}}
+            </th>
+        </tr>
+    </thead>
+    <tfoot>
+    <tr>
+        <td colspan="{{settings.columns.length}}">
+            <input type="button" data-ng-value="page.number" data-ng-click="changePage(page.number)" data-ng-repeat="page in pages">
+            Total items: {{settings.paging.total}}
+            <select data-ng-model="settings.paging.pageSize" data-ng-change="reload()" data-ng-options="size for size in settings.paging.pageSizes" />
+        </td>
+    </tr>
+    </tfoot>
+    <tbody data-ng-repeat="row in data" data-ng-click="triggerSelectedRow($index, row)">
+        <tr data-ng-class="{selected: selectedRow == $index}" data-ng-show="!row.editing">
+            <td data-ng-repeat="column in settings.columns">
+                {{row[column.id]}}
+            </td>
+        </tr>
+        <tr data-ng-show="row.editing">
+            <td data-ng-repeat="column in settings.columns">
+                <input type="text" data-ng-model="editingItem[column.id]" />
+                <span data-ng-show="$last">
+                    <input type="button" value="Save" data-ng-click="saveEdit()" />
+                    <input type="button" value="Cancel" data-ng-click="cancelEdit(row)"/>
+                </span>
+
+            </td>
+        </tr>
+    </tbody>
+</table>
