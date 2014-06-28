@@ -2,9 +2,31 @@
 
 
 // Declare app level module which depends on filters, and services
-angular.module('myApp', ['ui.grid', 'ui.menu'])
-.controller('testController', ['$scope', function($scope) {
-        var getBears = function(page, pageSize, sort) {
+angular.module('myApp', ['ui.grid', 'ui.menu', 'ngRoute'])
+    .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+        $routeProvider
+            .when('/usersManagement', {
+                template: "<div>You can manage users on that page. Probably.</div>"
+            })
+            .when('/bearsManagement', {
+                template: '<div data-grid="" data-settings="gridSettings"></div>',
+                controller: 'bearsController'
+            })
+            .when('/singleProgram', {
+                template: "<div>Some kind of single program setup here.</div>"
+            })
+            .when('/multipleProgram', {
+                template: "<div>Another kind of program setup here. Looks like multiple.</div>"
+            })
+            .when('/programComponentsManagement', {
+                template: "<div>Program component usage on that page is exhausted.</div>"
+            });
+
+
+        //$locationProvider.html5Mode(true);
+    }])
+    .controller('bearsController', ['$scope', function($scope) {
+        var getBears = function (page, pageSize, sort) {
             var bears = [
                 {id: 1, name: 'BigOne', color: 'black'},
                 {id: 2, name: "CalmOne", color: "brown"},
@@ -20,7 +42,7 @@ angular.module('myApp', ['ui.grid', 'ui.menu'])
             ];
 
             if (sort != null) {
-                bears.sort(function(a,b) {
+                bears.sort(function (a, b) {
                     if (a[sort.field] > b[sort.field])
                         return sort.desc ? -1 : 1;
                     else if (a[sort.field] < b[sort.field])
@@ -37,11 +59,6 @@ angular.module('myApp', ['ui.grid', 'ui.menu'])
             return {total: total, page: page, pageSize: pageSize, data: slicedBears};
         };
 
-        $scope.menuItems = [
-            {title: 'Administration', subItems: [{title: 'Users Management'}, {title: 'Files Management'}]},
-            {title: 'Program Management', subItems: [{title: 'Single Program'}, {title: 'Multiple Programs'}, {title: 'Program Components Management'}]}
-        ];
-
         $scope.gridSettings = {
             columns: [
                 {'id': 'id', 'name': 'Id', sortable: true, sorting: { desc: false } },
@@ -51,12 +68,24 @@ angular.module('myApp', ['ui.grid', 'ui.menu'])
             paging: {
                 page: 1,
                 pageSize: 4,
-                pageSizes: [2,3,4,5]
+                pageSizes: [2, 3, 4, 5]
             },
-            fetchData: function(page, pageSize, sort, success) {
+            fetchData: function (page, pageSize, sort, success) {
                 var response = getBears(page, pageSize, sort);
                 success(response.data, response.total);
             }
         };
-
+    }])
+    .controller('appController', ['$scope', function ($scope) {
+        $scope.menuItems = [
+            {title: 'Administration', subItems: [
+                {title: 'Users Management', url: "usersManagement"},
+                {title: 'Bears Management', url: "bearsManagement"}
+            ]},
+            {title: 'Program Management', subItems: [
+                {title: 'Single Program', url: "singleProgram"},
+                {title: 'Multiple Programs', url: "multipleProgram"},
+                {title: 'Program Components Management', url: "programComponentsManagement"}
+            ]}
+        ];
     }]);

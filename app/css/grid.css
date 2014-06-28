@@ -8,36 +8,36 @@ table.grid .sortable {
 }
 
 /*table.grid tr:nth-child(even) {*/
-    /*background-color:#f1f1f1;*/
+/*background-color:#f1f1f1;*/
 /*}*/
 
 /*table.grid tr:nth-child(odd) {*/
-    /*background-color:#ffffff;*/
+/*background-color:#ffffff;*/
 /*}*/
 
 /*table.grid th {*/
-    /*color:#ffffff;*/
-    /*background-color:#555555;*/
-    /*border:1px solid #555555;*/
-    /*padding:3px;*/
-    /*vertical-align:top;*/
-    /*text-align:left;*/
+/*color:#ffffff;*/
+/*background-color:#555555;*/
+/*border:1px solid #555555;*/
+/*padding:3px;*/
+/*vertical-align:top;*/
+/*text-align:left;*/
 /*}*/
 
 /*table.grid thead th.commands {*/
-    /*background-color: #666666;*/
+/*background-color: #666666;*/
 /*}*/
 
 /*table.grid td {*/
-    /*border:1px solid #d4d4d4;*/
-    /*padding:5px;*/
-    /*padding-top:7px;*/
-    /*padding-bottom:7px;*/
-    /*vertical-align:top;*/
+/*border:1px solid #d4d4d4;*/
+/*padding:5px;*/
+/*padding-top:7px;*/
+/*padding-bottom:7px;*/
+/*vertical-align:top;*/
 /*}*/
 
 /*table.grid tbody tr:hover {*/
-    /*background-color: #DDDDDD;*/
+/*background-color: #DDDDDD;*/
 /*}*/
 
 table.grid tbody tr.selected {

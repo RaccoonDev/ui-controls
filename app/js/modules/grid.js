@@ -1,30 +1,34 @@
 'use strict';
 
 angular.module('ui.grid', [])
-    .directive('grid', function() {
+    .controller('GridController', ['$scope', function($scope) {
+
+    }])
+    .directive('grid', function () {
         return {
-            scope : {
+            scope: {
                 settings: "=settings"
             },
             templateUrl: 'templates/grid.html',
             replace: true,
-            link: function(scope) {
+            controller: 'GridController',
+            link: function (scope) {
                 var deselectSelectedRow = function () {
                     scope.selectedRow = -1;
                     scope.selectedItem = null;
                 };
 
-                scope.reload = function() {
+                scope.reload = function () {
                     deselectSelectedRow();
 
-                    scope.settings.fetchData(scope.settings.paging.page, scope.settings.paging.pageSize, scope.currentSorting, function(data, total) {
+                    scope.settings.fetchData(scope.settings.paging.page, scope.settings.paging.pageSize, scope.currentSorting, function (data, total) {
                         scope.data = data;
                         scope.settings.paging.total = total;
 
                         scope.pages = [];
                         var pagesNumber = (scope.settings.paging.total + scope.settings.paging.pageSize - 1) / scope.settings.paging.pageSize;
-                        for(var i = 1; i <= pagesNumber; i++)
-                            scope.pages.push({ number : i })
+                        for (var i = 1; i <= pagesNumber; i++)
+                            scope.pages.push({ number: i })
                     });
                 };
 
@@ -34,9 +38,9 @@ angular.module('ui.grid', [])
                     scope.reload()
                 };
 
-                scope.sortBy = function(column) {
-                    if(column.sortable){
-                        column.sorting = column.sorting || {desc : true};
+                scope.sortBy = function (column) {
+                    if (column.sortable) {
+                        column.sorting = column.sorting || {desc: true};
                         column.sorting.desc = !column.sorting.desc;
                         scope.currentSorting = { field: column.id };
                         scope.currentSorting.desc = column.sorting.desc;
@@ -44,7 +48,7 @@ angular.module('ui.grid', [])
                     }
                 };
 
-                scope.triggerSelectedRow = function(index, item) {
+                scope.triggerSelectedRow = function (index, item) {
                     if (scope.selectedRow == index) {
                         scope.selectedRow = -1;
                         scope.selectedItem = null;
@@ -54,23 +58,23 @@ angular.module('ui.grid', [])
                     }
                 };
 
-                scope.logSelectedItem = function() {
+                scope.logSelectedItem = function () {
                     console.log(scope.selectedItem);
                 };
 
-                scope.editSelectedItem = function() {
+                scope.editSelectedItem = function () {
                     if (scope.selectedItem == null) return;
                     scope.editingItem = angular.copy(scope.selectedItem);
                     scope.originalItem = scope.selectedItem;
                     scope.originalItem.editing = true;
                 };
 
-                scope.cancelEdit = function() {
+                scope.cancelEdit = function () {
                     scope.editingItem = null;
                     scope.originalItem.editing = false;
                 };
 
-                scope.saveEdit = function() {
+                scope.saveEdit = function () {
                     angular.copy(scope.editingItem, scope.originalItem);
                 };
 

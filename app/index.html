@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html lang="en" data-ng-app="myApp">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>UI Controls Test</title>
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="css/grid.css" />
-    <link rel="stylesheet" href="css/menu.css" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>UI Controls Test</title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
+    <link rel="stylesheet" href="css/grid.css"/>
+    <link rel="stylesheet" href="css/menu.css"/>
 </head>
 <body>
 
-  <div data-ng-controller="testController" style="margin: 20px;">
+<div data-ng-controller="appController" style="margin: 20px;">
     <div data-menu="" data-items="menuItems"></div>
-    <div data-grid="" data-settings="gridSettings"></div>
-  </div>
+</div>
 
-  <script src="bower_components/angular/angular.js"></script>
-  <script src="js/modules/grid.js"></script>
-  <script src="js/modules/menu.js"></script>
-  <script src="js/app.js"></script>
+<div data-ng-view=""></div>
+
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<script src="js/modules/grid.js"></script>
+<script src="js/modules/menu.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>

@@ -1,16 +1,20 @@
 <div class="menu">
+    <hr/>
     <div>
         <ul>
-            <li data-ng-repeat="item in items" data-ng-click="selectItem(item)" class="btn btn-default" data-ng-class="{'btn-primary': item == selectedItem}">
+            <li data-ng-repeat="item in items" data-ng-click="selectItem(item)" class="btn btn-default"
+                data-ng-class="{'btn-primary': item == selectedItem}">
                 {{item.title}}
             </li>
         </ul>
     </div>
-    <div>
+    <div style="height: 21px;">
         <ul>
-            <li data-ng-repeat="subitem in selectedItem.subItems" data-ng-click="selecSubitem(subitem)" class="btn btn-default" data-ng-class="{'btn-primary': subitem == selectedSubitem}">
+            <li data-ng-repeat="subitem in selectedItem.subItems" data-ng-click="selectSubitem(subitem)"
+                class="btn btn-default" data-ng-class="{'btn-primary': subitem == selectedSubitem}">
                 {{subitem.title}}
             </li>
         </ul>
     </div>
+    <hr/>
 </div>
