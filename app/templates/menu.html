@@ -1,10 +1,16 @@
-<ul class="menu">
-    <li data-ng-repeat="item in items">
-        {{item.title}}
-        <ul data-ng-show="false">
-            <li data-ng-repeat="subitem in item.subItems">
+<div class="menu">
+    <div>
+        <ul>
+            <li data-ng-repeat="item in items" data-ng-click="selectItem(item)" class="btn btn-default" data-ng-class="{'btn-primary': item == selectedItem}">
+                {{item.title}}
+            </li>
+        </ul>
+    </div>
+    <div>
+        <ul>
+            <li data-ng-repeat="subitem in selectedItem.subItems" data-ng-click="selecSubitem(subitem)" class="btn btn-default" data-ng-class="{'btn-primary': subitem == selectedSubitem}">
                 {{subitem.title}}
             </li>
         </ul>
-    </li>
-</ul>
+    </div>
+</div>

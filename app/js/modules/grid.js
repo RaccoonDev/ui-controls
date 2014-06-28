@@ -59,6 +59,7 @@ angular.module('ui.grid', [])
                 };
 
                 scope.editSelectedItem = function() {
+                    if (scope.selectedItem == null) return;
                     scope.editingItem = angular.copy(scope.selectedItem);
                     scope.originalItem = scope.selectedItem;
                     scope.originalItem.editing = true;

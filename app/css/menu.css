@@ -1,5 +1,12 @@
-ul.menu {
+div.menu ul {
     list-style-type: none;
 }
 
-ul.menu li { display: inline;}
+div.menu ul li {
+    display: inline;
+    margin: 7px;
+}
+
+div.menu > div {
+    margin-bottom: 18px;
+}
