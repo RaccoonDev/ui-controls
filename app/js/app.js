@@ -3,7 +3,7 @@
 
 // Declare app level module which depends on filters, and services
 angular.module('myApp', ['ui.grid', 'ui.menu', 'ngRoute'])
-    .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+    .config(['$routeProvider', function($routeProvider) {
         $routeProvider
             .when('/usersManagement', {
                 template: "<div>You can manage users on that page. Probably.</div>"
@@ -22,8 +22,6 @@ angular.module('myApp', ['ui.grid', 'ui.menu', 'ngRoute'])
                 template: "<div>Program component usage on that page is exhausted.</div>"
             });
 
-
-        //$locationProvider.html5Mode(true);
     }])
     .controller('bearsController', ['$scope', function($scope) {
         var getBears = function (page, pageSize, sort) {
