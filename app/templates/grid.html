@@ -1,45 +1,48 @@
-<table class="grid table table-hover table-condensed">
-    <thead>
-    <tr>
-        <th colspan="{{settings.columns.length}}" class="commands">
-            <input type="button" value="Log" data-ng-click="logSelectedItem()" class="btn btn-xs"/>
-            <input type="button" value="Edit" data-ng-click="editSelectedItem()" class="btn btn-xs"/>
-        </th>
-    </tr>
-    <tr>
-        <th data-ng-repeat="column in settings.columns" data-ng-class="{sortable: column.sortable}"
-            data-ng-click="sortBy(column)">
-            {{column.name}}&nbsp;{{column.sortable ? column.sorting.desc ? 'dsc' : 'asc' : ''}}
-        </th>
-    </tr>
-    </thead>
-    <tfoot>
-    <tr>
-        <td colspan="{{settings.columns.length}}">
-            <div class="btn-group btn-group-xs">
-                <input type="button" class="btn" data-ng-value="page.number" data-ng-click="changePage(page.number)"
-                       data-ng-repeat="page in pages"
-                       data-ng-class="{'btn-primary':page.number == settings.paging.page}">
-            </div>
-            Total items: {{settings.paging.total}}
-            Page Size: <select data-ng-model="settings.paging.pageSize" data-ng-change="reload()"
-                               data-ng-options="size for size in settings.paging.pageSizes"></select>
-        </td>
-    </tr>
-    </tfoot>
-    <tbody>
-    <tr data-ng-repeat="row in data" data-ng-click="triggerSelectedRow($index, row)"
-        data-ng-class="{active: selectedRow == $index}">
-        <td data-ng-repeat-start="column in settings.columns" data-ng-show="!row.editing">
-            {{row[column.id]}}
-        </td>
-        <td data-ng-repeat-end="" data-ng-show="row.editing">
-            <input type="text" data-ng-model="editingItem[column.id]"/>
-                <span data-ng-show="$last">
-                    <input type="button" value="Save" data-ng-click="saveEdit()"/>
-                    <input type="button" value="Cancel" data-ng-click="cancelEdit(row)"/>
-                </span>
-        </td>
-    </tr>
-    </tbody>
-</table>
+<div class="grid">
+    <div class="loadingHover" data-ng-show="loading" />
+    <table class="table table-hover table-condensed">
+        <thead>
+        <tr>
+            <th colspan="{{settings.columns.length}}" class="commands">
+                <input type="button" value="Log" data-ng-click="logSelectedItem()" class="btn btn-xs"/>
+                <input type="button" value="Edit" data-ng-click="editSelectedItem()" class="btn btn-xs"/>
+            </th>
+        </tr>
+        <tr>
+            <th data-ng-repeat="column in settings.columns" data-ng-class="{sortable: column.sortable}"
+                data-ng-click="sortBy(column)">
+                {{column.name}}&nbsp;{{column.sortable ? column.sorting.desc ? 'dsc' : 'asc' : ''}}
+            </th>
+        </tr>
+        </thead>
+        <tfoot>
+        <tr>
+            <td colspan="{{settings.columns.length}}">
+                <div class="btn-group btn-group-xs">
+                    <input type="button" class="btn" data-ng-value="page.number" data-ng-click="changePage(page.number)"
+                           data-ng-repeat="page in pages"
+                           data-ng-class="{'btn-primary':page.number == settings.paging.page}">
+                </div>
+                Total items: {{settings.paging.total}}
+                Page Size: <select data-ng-model="settings.paging.pageSize" data-ng-change="reload()"
+                                   data-ng-options="size for size in settings.paging.pageSizes"></select>
+            </td>
+        </tr>
+        </tfoot>
+        <tbody>
+        <tr data-ng-repeat="row in data" data-ng-click="triggerSelectedRow($index, row)"
+            data-ng-class="{active: selectedRow == $index}">
+            <td data-ng-repeat-start="column in settings.columns" data-ng-show="!row.editing" data-ng-dblclick="selectRow($index, row);editSelectedItem()">
+                {{row[column.id]}}
+            </td>
+            <td data-ng-repeat-end="" data-ng-show="row.editing" data-ng-keypress="saveCancelKeys($event)">
+                <input type="text" data-ng-model="editingItem[column.id]"/>
+                    <span data-ng-show="$last">
+                        <input type="button" value="Save" data-ng-click="saveEdit()"/>
+                        <input type="button" value="Cancel" data-ng-click="cancelEdit(row)"/>
+                    </span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

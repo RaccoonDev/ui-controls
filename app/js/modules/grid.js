@@ -11,14 +11,21 @@ angular.module('ui.grid', [])
         $scope.reload = function () {
             deselectSelectedRow();
 
+            $scope.loading = true;
+            // Expected fetch data: setting.fetchData(currentPage, items per page, currentSortingObject, success_callback, error_callback)
             $scope.settings.fetchData($scope.settings.paging.page, $scope.settings.paging.pageSize, $scope.currentSorting, function (data, total) {
                 $scope.data = data;
                 $scope.settings.paging.total = total;
 
                 $scope.pages = [];
                 var pagesNumber = ($scope.settings.paging.total + $scope.settings.paging.pageSize - 1) / $scope.settings.paging.pageSize;
-                for (var i = 1; i <= pagesNumber; i++)
-                    $scope.pages.push({ number: i })
+                for (var i = 1; i <= pagesNumber; i++) {
+                    $scope.pages.push({ number: i });
+                }
+                $scope.loading = false;
+            }, function(error) {
+                console.log(error);
+                $scope.loading = false;
             });
         };
 
@@ -38,13 +45,16 @@ angular.module('ui.grid', [])
             }
         };
 
+        $scope.selectRow = function(index, item) {
+            $scope.selectedRow = index;
+            $scope.selectedItem = item;
+        };
+
         $scope.triggerSelectedRow = function (index, item) {
             if ($scope.selectedRow == index) {
-                $scope.selectedRow = -1;
-                $scope.selectedItem = null;
+                $scope.selectRow(-1, null);
             } else {
-                $scope.selectedRow = index;
-                $scope.selectedItem = item;
+                $scope.selectRow(index, item);
             }
         };
 
@@ -66,6 +76,12 @@ angular.module('ui.grid', [])
 
         $scope.saveEdit = function () {
             angular.copy($scope.editingItem, $scope.originalItem);
+        };
+
+        $scope.saveCancelKeys = function(event) {
+            if(event !== null && event.keyIdentifier === 'Enter') {
+                $scope.saveEdit();
+            }
         };
 
         this.init = function() {

@@ -1,7 +1,15 @@
 'use strict';
 
+/*
+    TODO:
+    [ ] Save updates
+    [ ] Create new items in grid
+    [ ] Create new items using modal dialog
+    [ ] Filter items by requesting items with filter
+    [ ] Think about adding dependency on some other ui controls. Probably angular-bootstrap or something like angular ui
 
-// Declare app level module which depends on filters, and services
+ */
+
 angular.module('myApp', ['ui.grid', 'ui.menu', 'ngRoute'])
     .config(['$routeProvider', function($routeProvider) {
         $routeProvider
@@ -23,7 +31,7 @@ angular.module('myApp', ['ui.grid', 'ui.menu', 'ngRoute'])
             });
 
     }])
-    .controller('bearsController', ['$scope', function($scope) {
+    .controller('bearsController', ['$scope', '$timeout', function($scope, $timeout) {
         var getBears = function (page, pageSize, sort) {
             var bears = [
                 {id: 1, name: 'BigOne', color: 'black'},
@@ -50,6 +58,8 @@ angular.module('myApp', ['ui.grid', 'ui.menu', 'ngRoute'])
                 });
             }
 
+            //throw new Error('error getting data from server');
+
             var skip = pageSize * (page - 1);
             var slicedBears = bears.slice(skip, skip + pageSize);
             var total = bears.length;
@@ -68,9 +78,15 @@ angular.module('myApp', ['ui.grid', 'ui.menu', 'ngRoute'])
                 pageSize: 4,
                 pageSizes: [2, 3, 4, 5]
             },
-            fetchData: function (page, pageSize, sort, success) {
-                var response = getBears(page, pageSize, sort);
-                success(response.data, response.total);
+            fetchData: function (page, pageSize, sort, success, error) {
+                $timeout(function() {
+                    try {
+                        var response = getBears(page, pageSize, sort);
+                        success(response.data, response.total);
+                    } catch (exception) {
+                        error(exception);
+                    }
+                }, 2000);
             }
         };
     }])
