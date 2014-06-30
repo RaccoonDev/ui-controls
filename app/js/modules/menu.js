@@ -20,7 +20,22 @@ angular.module('ui.menu', [])
             },
             templateUrl: 'templates/menu.html',
             replace: true,
-            controller: 'MenuController'
+            controller: 'MenuController',
+            link: function(scope) {
+                var url = $location.path().substring(1);
+
+                for(var itemIndex in scope.items) {
+                    var currentItem = scope.items[itemIndex];
+                    for(var subItemIndex in currentItem.subItems) {
+                        var currentSubitem =currentItem.subItems[subItemIndex];
+                        if (url === currentSubitem.url) {
+                            scope.selectedItem = currentItem;
+                            scope.selectedSubitem = currentSubitem;
+                        }
+                    }
+                }
+
+            }
         };
     }])
 ;

@@ -3,11 +3,15 @@
 /*
     TODO:
     [ ] Cover grid with tests
-    [ ] Save updates
-    [ ] Create new items in grid
+    [X] Save updates
+    [X] Create new items in grid
     [ ] Create new items using modal dialog
     [ ] Filter items by requesting items with filter
     [ ] Think about adding dependency on some other ui controls. Probably angular-bootstrap or something like angular ui
+    [X] Column width
+    [ ] Editable and not editable columns
+    [ ] Edit types
+    [X] Set active menu item by path
 
  */
 
@@ -70,8 +74,8 @@ angular.module('myApp', ['ui.grid', 'ui.menu', 'ngRoute'])
 
         $scope.gridSettings = {
             columns: [
-                {'id': 'id', 'name': 'Id', sortable: true, sorting: { desc: false } },
-                {'id': 'name', 'name': 'Name', sortable: true },
+                {'id': 'id', 'name': 'Id', sortable: true, sorting: { desc: false }, width: '25%' },
+                {'id': 'name', 'name': 'Name', sortable: true, width: '30%' },
                 {'id': 'color', 'name': 'Color'}
             ],
             paging: {
@@ -79,7 +83,7 @@ angular.module('myApp', ['ui.grid', 'ui.menu', 'ngRoute'])
                 pageSize: 4,
                 pageSizes: [2, 3, 4, 5]
             },
-            fetchData: function (page, pageSize, sort, success, error) {
+            fetch: function (page, pageSize, sort, success, error) {
                 $timeout(function() {
                     try {
                         var response = getBears(page, pageSize, sort);
@@ -87,7 +91,23 @@ angular.module('myApp', ['ui.grid', 'ui.menu', 'ngRoute'])
                     } catch (exception) {
                         error(exception);
                     }
-                }, 2000);
+                }, 1000);
+            },
+            save: function(item, success, error) {
+                try {
+                    console.log('updating existing item ', item);
+                    success();
+                } catch(exception) {
+                    error();
+                }
+            },
+            create: function(item, success, error) {
+                try {
+                    console.log('creating new item ', item);
+                    success();
+                } catch (exception) {
+                    error();
+                }
             }
         };
     }])

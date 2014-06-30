@@ -1,10 +1,14 @@
 <div class="grid">
     <div class="loadingHover" data-ng-show="loading" />
     <table class="table table-hover table-condensed">
+        <colgroup>
+            <col span="1" data-ng-repeat="column in settings.columns" data-ng-style="{width: column.width}">
+        </colgroup>
         <thead>
         <tr>
             <th colspan="{{settings.columns.length}}" class="commands">
                 <input type="button" value="Log" data-ng-click="logSelectedItem()" class="btn btn-xs"/>
+                <input type="button" value="New" data-ng-click="createNewItem()" class="btn btn-xs" />
                 <input type="button" value="Edit" data-ng-click="editSelectedItem()" class="btn btn-xs"/>
             </th>
         </tr>
@@ -38,7 +42,7 @@
             <td data-ng-repeat-end="" data-ng-show="row.editing" data-ng-keypress="saveCancelKeys($event)">
                 <input type="text" data-ng-model="editingItem[column.id]"/>
                     <span data-ng-show="$last">
-                        <input type="button" value="Save" data-ng-click="saveEdit()"/>
+                        <input type="button" value="Save" data-ng-click="save()"/>
                         <input type="button" value="Cancel" data-ng-click="cancelEdit(row)"/>
                     </span>
             </td>

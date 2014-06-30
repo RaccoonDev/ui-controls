@@ -12,8 +12,8 @@ angular.module('ui.grid', [])
             deselectSelectedRow();
 
             $scope.loading = true;
-            // Expected fetch data: setting.fetchData(currentPage, items per page, currentSortingObject, success_callback, error_callback)
-            $scope.settings.fetchData($scope.settings.paging.page, $scope.settings.paging.pageSize, $scope.currentSorting, function (data, total) {
+            // Expected fetch data: setting.fetch(currentPage, items per page, currentSortingObject, success_callback, error_callback)
+            $scope.settings.fetch($scope.settings.paging.page, $scope.settings.paging.pageSize, $scope.currentSorting, function (data, total) {
                 $scope.data = data;
                 $scope.settings.paging.total = total;
 
@@ -62,25 +62,45 @@ angular.module('ui.grid', [])
             console.log($scope.selectedItem);
         };
 
-        $scope.editSelectedItem = function () {
+        $scope.editSelectedItem = function (creatingNew) {
             if ($scope.selectedItem == null) return;
             $scope.editingItem = angular.copy($scope.selectedItem);
             $scope.originalItem = $scope.selectedItem;
             $scope.originalItem.editing = true;
+            $scope.creatingNew = creatingNew;
         };
 
         $scope.cancelEdit = function () {
+            if($scope.creatingNew === true) {
+                $scope.data.shift();
+            }
             $scope.editingItem = null;
             $scope.originalItem.editing = false;
         };
 
-        $scope.saveEdit = function () {
-            angular.copy($scope.editingItem, $scope.originalItem);
+        $scope.save = function () {
+            $scope.loading = true;
+            if($scope.creatingNew === true) {
+                $scope.settings.create($scope.editingItem, function() { $scope.reload(); }, function () { $scope.loading = false; });
+            } else {
+                $scope.settings.save($scope.editingItem, function () {
+                    $scope.reload();
+                }, function () {
+                    $scope.loading = false;
+                });
+            }
+        };
+
+        $scope.createNewItem = function() {
+            var newItem = {};
+            $scope.data.unshift(newItem);
+            $scope.selectRow(0, newItem);
+            $scope.editSelectedItem(true);
         };
 
         $scope.saveCancelKeys = function(event) {
             if(event !== null && event.keyIdentifier === 'Enter') {
-                $scope.saveEdit();
+                $scope.save();
             }
         };
 
