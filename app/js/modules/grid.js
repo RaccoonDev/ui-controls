@@ -123,4 +123,11 @@ angular.module('ui.grid', [])
                 gridCtrl.init();
             }
         };
+    })
+    .directive('editor', function() {
+        return {
+            template: '<input type="text" data-ng-model="editingItem[column.id]">',
+            replace: true,
+            transclude: true
+        };
     });

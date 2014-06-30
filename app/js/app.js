@@ -10,7 +10,7 @@
 
  */
 
-angular.module('myApp', ['ui.grid', 'ui.menu', 'ngRoute'])
+angular.module('myApp', ['ui.grid', 'ui.menu', 'ngRoute', 'ui.bootstrap'])
     .config(['$routeProvider', function($routeProvider) {
         $routeProvider
             .when('/usersManagement', {
@@ -71,7 +71,7 @@ angular.module('myApp', ['ui.grid', 'ui.menu', 'ngRoute'])
             columns: [
                 {'id': 'id', 'name': 'Id', sortable: true, sorting: { desc: false }, width: '25%' },
                 {'id': 'name', 'name': 'Name', sortable: true, width: '30%', editable: true },
-                {'id': 'color', 'name': 'Color', editable: true}
+                {'id': 'color', 'name': 'Color', editable: true }
             ],
             paging: {
                 page: 1,
@@ -106,7 +106,7 @@ angular.module('myApp', ['ui.grid', 'ui.menu', 'ngRoute'])
             }
         };
     }])
-    .controller('appController', ['$scope', function ($scope) {
+    .controller('menuController', ['$scope', function ($scope) {
         $scope.menuItems = [
             {title: 'Administration', subItems: [
                 {title: 'Users Management', url: "usersManagement"},
@@ -118,4 +118,27 @@ angular.module('myApp', ['ui.grid', 'ui.menu', 'ngRoute'])
                 {title: 'Program Components Management', url: "programComponentsManagement"}
             ]}
         ];
+    }])
+    .controller('popupTestController', ['$scope', '$modal', function($scope, $modal) {
+
+        var myModalInstanceCtrl = function($scope, $modalInstance) {
+            $scope.ok = function() {
+                $modalInstance.close({info: 'info here'});
+            };
+            $scope.cancel = function() {
+                $modalInstance.dismiss('cancel');
+            };
+        };
+
+        $scope.openPopup = function() {
+            var modalInstance = $modal.open({
+                templateUrl: 'myModalContent.html',
+                controller: myModalInstanceCtrl
+            });
+
+            modalInstance.result.then(function(data) { console.log('ok clicked', arguments)},
+                function() { console.log('cancel clicked', arguments);}
+            );
+        };
     }]);
+
