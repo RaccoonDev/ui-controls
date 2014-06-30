@@ -3,15 +3,10 @@
 /*
     TODO:
     [ ] Cover grid with tests
-    [X] Save updates
-    [X] Create new items in grid
     [ ] Create new items using modal dialog
     [ ] Filter items by requesting items with filter
     [ ] Think about adding dependency on some other ui controls. Probably angular-bootstrap or something like angular ui
-    [X] Column width
-    [ ] Editable and not editable columns
     [ ] Edit types
-    [X] Set active menu item by path
 
  */
 
@@ -75,8 +70,8 @@ angular.module('myApp', ['ui.grid', 'ui.menu', 'ngRoute'])
         $scope.gridSettings = {
             columns: [
                 {'id': 'id', 'name': 'Id', sortable: true, sorting: { desc: false }, width: '25%' },
-                {'id': 'name', 'name': 'Name', sortable: true, width: '30%' },
-                {'id': 'color', 'name': 'Color'}
+                {'id': 'name', 'name': 'Name', sortable: true, width: '30%', editable: true },
+                {'id': 'color', 'name': 'Color', editable: true}
             ],
             paging: {
                 page: 1,
