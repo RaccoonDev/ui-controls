@@ -2,6 +2,7 @@
 
 /*
     TODO:
+    [ ] Cover grid with tests
     [ ] Save updates
     [ ] Create new items in grid
     [ ] Create new items using modal dialog
