@@ -102,8 +102,12 @@ angular.module('ui.grid', [])
 
         $scope.createNewItem = function() {
             var newItem = {};
-            $scope.data.unshift(newItem);
-            $scope.selectRow(0, newItem);
+            if($scope.settings.editMode === 'external') {
+                $scope.selectRow(-1, newItem);
+            } else {
+                $scope.data.unshift(newItem);
+                $scope.selectRow(0, newItem);
+            }
             $scope.editSelectedItem(true);
         };
 

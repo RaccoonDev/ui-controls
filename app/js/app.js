@@ -3,7 +3,6 @@
 /*
     TODO:
     [ ] Cover grid with tests
-    [ ] Create new items using modal dialog
     [ ] Filter items by requesting items with filter
     [ ] Think about adding dependency on some other ui controls. Probably angular-bootstrap or something like angular ui
     [ ] Edit types
@@ -72,14 +71,11 @@ angular.module('myApp', ['ui.grid', 'ui.menu', 'ngRoute', 'ui.bootstrap'])
             editMode: 'external',
             editAction: function(itemToEdit, ok_callback, cancel_callback) {
 
-                console.log(itemToEdit);
-
                 var modalInstance = $modal.open({
                     templateUrl: 'myModalContent.html',
                     controller: myModalInstanceCtrl,
                     resolve: {
                         item: function() {
-                            console.log(itemToEdit);
                             return itemToEdit;
                         }
                     }
