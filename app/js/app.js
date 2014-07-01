@@ -133,19 +133,6 @@ angular.module('myApp', ['ui.grid', 'ui.menu', 'ngRoute', 'ui.bootstrap'])
                 {title: 'Program Components Management', url: "programComponentsManagement"}
             ]}
         ];
-    }])
-    .controller('popupTestController', ['$scope', '$modal', function($scope, $modal) {
-
-        $scope.openPopup = function() {
-            var modalInstance = $modal.open({
-                templateUrl: 'myModalContent.html',
-                controller: myModalInstanceCtrl
-            });
-
-            modalInstance.result.then(function(data) { console.log('ok clicked', arguments)},
-                function() { console.log('cancel clicked', arguments);}
-            );
-        };
     }]);
 
 var myModalInstanceCtrl = function($scope, $modalInstance, item) {
