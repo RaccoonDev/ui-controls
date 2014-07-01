@@ -1,4 +1,4 @@
 ui-controls
 ===========
 
-UI Controls for angular. Currently contains of Grid and Menu.
+UI Controls for angular. Currently contains Grid and Menu.
