@@ -7,6 +7,7 @@
     [ ] Filter items by requesting items with filter
     [ ] Think about adding dependency on some other ui controls. Probably angular-bootstrap or something like angular ui
     [ ] Edit types
+    [ ] Use promises for callback places
 
  */
 
@@ -31,7 +32,7 @@ angular.module('myApp', ['ui.grid', 'ui.menu', 'ngRoute', 'ui.bootstrap'])
             });
 
     }])
-    .controller('bearsController', ['$scope', '$timeout', function($scope, $timeout) {
+    .controller('bearsController', ['$scope', '$timeout', '$modal', function($scope, $timeout, $modal) {
         var getBears = function (page, pageSize, sort) {
             var bears = [
                 {id: 1, name: 'BigOne', color: 'black'},
@@ -68,6 +69,24 @@ angular.module('myApp', ['ui.grid', 'ui.menu', 'ngRoute', 'ui.bootstrap'])
         };
 
         $scope.gridSettings = {
+            editMode: 'external',
+            editAction: function(itemToEdit, ok_callback, cancel_callback) {
+
+                console.log(itemToEdit);
+
+                var modalInstance = $modal.open({
+                    templateUrl: 'myModalContent.html',
+                    controller: myModalInstanceCtrl,
+                    resolve: {
+                        item: function() {
+                            console.log(itemToEdit);
+                            return itemToEdit;
+                        }
+                    }
+                });
+
+                modalInstance.result.then(ok_callback, cancel_callback);
+            },
             columns: [
                 {'id': 'id', 'name': 'Id', sortable: true, sorting: { desc: false }, width: '25%' },
                 {'id': 'name', 'name': 'Name', sortable: true, width: '30%', editable: true },
@@ -121,15 +140,6 @@ angular.module('myApp', ['ui.grid', 'ui.menu', 'ngRoute', 'ui.bootstrap'])
     }])
     .controller('popupTestController', ['$scope', '$modal', function($scope, $modal) {
 
-        var myModalInstanceCtrl = function($scope, $modalInstance) {
-            $scope.ok = function() {
-                $modalInstance.close({info: 'info here'});
-            };
-            $scope.cancel = function() {
-                $modalInstance.dismiss('cancel');
-            };
-        };
-
         $scope.openPopup = function() {
             var modalInstance = $modal.open({
                 templateUrl: 'myModalContent.html',
@@ -142,3 +152,13 @@ angular.module('myApp', ['ui.grid', 'ui.menu', 'ngRoute', 'ui.bootstrap'])
         };
     }]);
 
+var myModalInstanceCtrl = function($scope, $modalInstance, item) {
+    $scope.item = item;
+
+    $scope.ok = function() {
+        $modalInstance.close($scope.item);
+    };
+    $scope.cancel = function() {
+        $modalInstance.dismiss('cancel');
+    };
+};

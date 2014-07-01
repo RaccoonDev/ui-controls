@@ -66,7 +66,16 @@ angular.module('ui.grid', [])
             if ($scope.selectedItem == null) return;
             $scope.editingItem = angular.copy($scope.selectedItem);
             $scope.originalItem = $scope.selectedItem;
-            $scope.originalItem.editing = true;
+
+            if ($scope.settings.editMode === 'external') {
+                $scope.settings.editAction($scope.editingItem, function() {
+                    $scope.save();
+                }, function() {
+                    $scope.cancelEdit();
+                })
+            } else {
+                $scope.originalItem.editing = true;
+            }
             $scope.creatingNew = creatingNew;
         };
 
@@ -112,7 +121,7 @@ angular.module('ui.grid', [])
     .directive('grid', function () {
         return {
             scope: {
-                settings: "=settings"
+                settings: "="
             },
             templateUrl: 'templates/grid.html',
             replace: true,
@@ -124,7 +133,7 @@ angular.module('ui.grid', [])
             }
         };
     })
-    .directive('editor', function() {
+    .directive('inlineEditor', function() {
         return {
             template: '<input type="text" data-ng-model="editingItem[column.id]">',
             replace: true,

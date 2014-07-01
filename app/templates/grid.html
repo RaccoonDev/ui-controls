@@ -40,8 +40,7 @@
                 {{row[column.id]}}
             </td>
             <td data-ng-repeat-end="" data-ng-show="row.editing" data-ng-keypress="saveCancelKeys($event)">
-                <div data-editor="" data-ng-if="column.editable"></div>
-                <!--<input type="text" data-ng-model="editingItem[column.id]" data-ng-if="column.editable" />-->
+                <div data-inline-editor="" data-ng-if="column.editable"></div>
                 <span data-ng-if="!column.editable">{{row[column.id]}}</span>
                 <span data-ng-show="$last">
                     <input type="button" value="Save" data-ng-click="save()"/>
