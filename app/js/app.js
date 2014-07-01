@@ -4,9 +4,9 @@
     TODO:
     [ ] Cover grid with tests
     [ ] Filter items by requesting items with filter
-    [ ] Think about adding dependency on some other ui controls. Probably angular-bootstrap or something like angular ui
     [ ] Edit types
     [ ] Use promises for callback places
+    [ ] Specify custom grid command buttons
 
  */
 
